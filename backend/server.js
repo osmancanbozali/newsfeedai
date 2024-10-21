@@ -3,7 +3,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const newsRoutes = require('./routes/newsRoutes');
 
-const { getSummaryForNews } = require('./cron/summarizeCron');
+const { generateAudiosForNews } = require('./cron/generateAudioForNewsCron');
 // Load environment variables
 dotenv.config();
 
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 const deneme = async () => {
-    await getSummaryForNews();
+    await generateAudiosForNews();
 }
 deneme();
 
