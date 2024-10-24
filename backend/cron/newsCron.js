@@ -5,7 +5,7 @@ const { fetchNewsFromAPI } = require('../services/newsService');
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const fetchAndSaveNews = async () => {
-    const categories = ['general', 'world', 'nation', 'business', 'technology', 'entertainment', 'sports', 'science', 'technology'];
+    const categories = ['general', 'world', 'nation', 'business', 'technology', 'entertainment', 'sports', 'science'];
     try {
         for (category of categories) {
             const articles = await fetchNewsFromAPI(category, 5);
