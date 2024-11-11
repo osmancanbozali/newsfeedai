@@ -5,7 +5,7 @@ const newsRoutes = require('./routes/newsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 
-const { generateAudiosForNews } = require('./cron/generateAudioForNewsCron');
+const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
 
 // Load environment variables
 dotenv.config();
@@ -16,17 +16,15 @@ const PORT = process.env.PORT || 3000;
 // Connect to MongoDB
 connectDB();
 
+// Start the cron job
+fetchSummarizeVoiceNewsCron.start();
+
 // Middleware to parse JSON
 app.use(express.json());
 
 app.use('/news', newsRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-
-const deneme = async () => {
-    await generateAudiosForNews();
-}
-deneme();
 
 // Start the server
 app.listen(PORT, () => {

@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
     fullname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    lastActivity: { type: Date, default: Date.now },
     interactedNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
     interactedCategories: {
         type: Map,

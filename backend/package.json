@@ -17,6 +17,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
+    "node-cron": "^3.0.3",
     "openai": "^4.68.1"
   }
 }
