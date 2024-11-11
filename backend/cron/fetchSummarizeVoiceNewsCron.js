@@ -46,6 +46,12 @@ const fetchSummarizeVoiceNews = async () => {
                     }
                     console.log(`Audio generated for: ${article.title}`);
 
+                    // Set isReady to true if both summary and audio are available
+                    if (article.summary && article.audioUrl) {
+                        article.isReady = true;
+                        await article.save();
+                    }
+
                 } catch (error) {
                     console.error(`Error processing article (${articleData.url}):`, error.message);
                 }

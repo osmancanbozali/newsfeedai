@@ -46,7 +46,7 @@ exports.getPersonalizedFeed = async (req, res) => {
     for (const [category, count] of Object.entries(categoryArticleCounts)) {
       if (count > 0) {
         const categorySkip = (page - 1) * count; // Skip based on the weighted count for pagination
-        const articles = await News.find({ category })
+        const articles = await News.find({ category, isReady: true })
           .sort({ publishedAt: -1 })
           .skip(categorySkip) // Skip articles based on the calculated skip for this category
           .limit(count); // Limit articles per category
@@ -78,13 +78,13 @@ exports.getNewsByCategory = async (req, res) => {
     const skip = (page - 1) * limit;
 
     // Fetch news articles for the specified category with pagination
-    const newsArticles = await News.find({ category })
+    const newsArticles = await News.find({ category, isReady: true })
       .sort({ publishedAt: -1 }) // Sort by publish date in descending order
       .skip(skip) // Skip articles based on page number
       .limit(limit); // Fixed limit of 20 articles per page
 
     // Get the total count of articles in this category for pagination metadata
-    const totalArticles = await News.countDocuments({ category });
+    const totalArticles = await News.countDocuments({ category, isReady: true });
     const totalPages = Math.ceil(totalArticles / limit);
 
     res.status(200).json({
