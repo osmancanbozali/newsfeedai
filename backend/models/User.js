@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
     fullname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    interactedNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
     interactedCategories: {
         type: Map,
         of: Number,
@@ -15,7 +16,6 @@ const userSchema = new mongoose.Schema({
             ['technology', 0],
             ['entertainment', 0],
             ['sports', 0],
-            ['technology', 0],
             ['science', 0]
         ])
     }

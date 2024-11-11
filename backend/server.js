@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const newsRoutes = require('./routes/newsRoutes');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const { generateAudiosForNews } = require('./cron/generateAudioForNewsCron');
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use('/news', newsRoutes);
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 
 const deneme = async () => {
     await generateAudiosForNews();
