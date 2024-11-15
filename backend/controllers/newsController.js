@@ -131,6 +131,10 @@ exports.trackNewsClick = async (req, res) => {
         user.interactedCategories.set(category, user.interactedCategories.get(category) + 1);
       }
 
+      // Increment the click count for the news article
+      news.clickCount += 1;
+      await news.save();
+
       // Update lastActivity
       user.lastActivity = Date.now();
 

@@ -9,7 +9,8 @@ const newsSchema = new mongoose.Schema({
     publishedAt: {type: Date, required: true},
     url: {type: String, required: true},
     audioUrl: {type: String}, // TTS API generated
-    isReady: { type: Boolean, default: false } // Indicates if summary and audio are completed
+    isReady: { type: Boolean, default: false }, // Indicates if summary and audio are completed
+    clickCount: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model('News', newsSchema);
