@@ -4,9 +4,10 @@ const dotenv = require('dotenv');
 const newsRoutes = require('./routes/newsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const podcastRoutes = require('./routes/podcastRoutes');
 
 //const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
-const generatePodcastsCron = require('./cron/podcastCron');
+//const generatePodcastsCron = require('./cron/podcastCron');
 
 // Load environment variables
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use('/news', newsRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/podcast', podcastRoutes);
 
 // Start the server
 app.listen(PORT, () => {
