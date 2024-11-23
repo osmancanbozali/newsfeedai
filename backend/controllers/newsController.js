@@ -37,8 +37,8 @@ exports.getPersonalizedFeed = async (req, res) => {
     let totalAssigned = Object.values(categoryArticleCounts).reduce((sum, count) => sum + count, 0);
     if (totalAssigned !== limit) {
       const adjustment = limit - totalAssigned;
-      const categories = Object.keys(categoryArticleCounts);
-      categoryArticleCounts[categories[0]] += adjustment; // Adjust the first category to match the total limit
+      const mostClickedCategory = Object.keys(categoryArticleCounts).reduce((a, b) => categoryArticleCounts[a] > categoryArticleCounts[b] ? a : b);
+      categoryArticleCounts[mostClickedCategory] += adjustment; // Adjust the first category to match the total limit
     }
 
     // Fetch articles for each category according to the calculated count and apply pagination

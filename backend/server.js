@@ -5,7 +5,8 @@ const newsRoutes = require('./routes/newsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 
-const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
+//const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
+const generatePodcastsCron = require('./cron/podcastCron');
 
 // Load environment variables
 dotenv.config();
@@ -17,7 +18,8 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 
 // Start the cron job
-fetchSummarizeVoiceNewsCron.start();
+//fetchSummarizeVoiceNewsCron.start();
+//generatePodcastsCron.start();
 
 // Middleware to parse JSON
 app.use(express.json());
