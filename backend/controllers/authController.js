@@ -4,7 +4,18 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
     try {
-        const { fullname, email, password } = req.body;
+        const { fullname, email, password, confirmPassword } = req.body;
+        console.log(req.body);
+        if (!fullname || !email || !password || !confirmPassword) {
+            return res.status(400).json({ message: 'All fields are required.' });
+        }
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: 'Passwords do not match.' });
+        }
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+        }
+        
         const hashedPassword = await bcrypt.hash(password, 10) // second parameter might be changed
 
         const user = new User({ fullname, email, password: hashedPassword });
