@@ -1,12 +1,12 @@
 import Header from '../components/Header';
 export default function RegisterPage() {
-    return (<div className='h-screen bg-secondarycolor relative'>
+    return (<div className='h-screen bg-secondarycolor overflow-y-auto'>
         <header>
             <Header />
         </header>
         <body className='flex justify-center items-center'>
-            <div className='absolute inset-0 m-auto w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-16 py-12'>
-                <h1 className='text-white text-4xl font-bold text-center mb-5'>Register to NewsfeedAI</h1>
+            <div className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-16 py-12 mt-20'>
+                <h1 className='text-white text-3xl lg:text-4xl font-bold text-center mb-5'>Register to NewsfeedAI</h1>
                 <label className='text-white font-bold' htmlFor="">Fullname:</label>
                 <input className='h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none' type="text" />
                 <label className='text-white font-bold' htmlFor="">Email:</label>
