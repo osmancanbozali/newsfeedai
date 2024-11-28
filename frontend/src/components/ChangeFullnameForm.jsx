@@ -15,7 +15,6 @@ export default function ChangeFullnameForm({onClose}) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzQ4MTUzYjhhMGQwOWNjODcwNDRhMjUiLCJlbWFpbCI6InpAeC5jb20iLCJpYXQiOjE3MzI3NzcyOTMsImV4cCI6MTczMjc4MDg5M30.QzOqxIY2rPnC2fHC9FN6apAzt2giUX7XcI1DxzvqLNY`
                 },
                 body: JSON.stringify({ fullname })
             });

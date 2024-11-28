@@ -34,8 +34,8 @@ export default function SettingsPage() {
                 </div>
                 {activeForm === 'changeFullname' && <ChangeFullnameForm onClose={handleCloseForm} />}
                 {activeForm === 'changePassword' && <ChangePasswordForm onClose={handleCloseForm}/>}
-                {activeForm === 'resetPreferences' && <ResetPreferencesForm />}
-                {activeForm === 'deleteAccount' && <DeleteAccountForm />}
+                {activeForm === 'resetPreferences' && <ResetPreferencesForm onClose={handleCloseForm} />}
+                {activeForm === 'deleteAccount' && <DeleteAccountForm onClose={handleCloseForm} />}
             </div>
         </div>
     );
