@@ -27,11 +27,12 @@ exports.updateFullName = async (req, res) => {
 exports.updatePassword = async (req, res) => {
     try {
         const userId = req.user._id; // Assume user ID is available from JWT middleware
-        const { currentPassword, newPassword } = req.body;
+        const { currentPassword, newPassword, confirmNewPassword } = req.body;
 
-        if (!currentPassword || !newPassword) {
-            return res.status(400).json({ message: 'Current and new passwords are required.' });
+        if (!currentPassword || !newPassword || !confirmNewPassword) {
+            return res.status(400).json({ message: 'Current, New and comfirm new passwords are required.' });
         }
+        
 
         const user = await User.findById(userId);
 
@@ -39,6 +40,14 @@ exports.updatePassword = async (req, res) => {
         const isMatch = await bcrypt.compare(currentPassword, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Current password is incorrect.' });
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            return res.status(400).json({ message: 'New and confirm new passwords do not match.' });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
         }
 
         // Hash the new password and update it
