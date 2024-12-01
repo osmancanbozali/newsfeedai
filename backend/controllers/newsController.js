@@ -21,7 +21,7 @@ exports.getPersonalizedFeed = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const limit = 20; // Fixed limit for the total number of articles per page
+    const limit = 12; // Fixed limit for the total number of articles per page
     const page = parseInt(req.query.page) || 1;
 
     // Calculate total interaction count across all categories
@@ -61,7 +61,7 @@ exports.getPersonalizedFeed = async (req, res) => {
       page,
       limit,
       totalArticles: newsFeed.length,
-      personalizedNews: newsFeed,
+      newsArticles: newsFeed,
     });
   } catch (error) {
     console.error('Error fetching personalized feed:', error.message);
@@ -74,19 +74,20 @@ exports.getNewsByCategory = async (req, res) => {
   try {
     const { category } = req.params;
     const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
-    const limit = 20; // Fixed limit of 20 articles per page
+    const limit = 12;
     const skip = (page - 1) * limit;
 
     // Fetch news articles for the specified category with pagination
     const newsArticles = await News.find({ category, isReady: true })
       .sort({ publishedAt: -1 }) // Sort by publish date in descending order
       .skip(skip) // Skip articles based on page number
-      .limit(limit); // Fixed limit of 20 articles per page
+      .limit(limit);
 
     // Get the total count of articles in this category for pagination metadata
     const totalArticles = await News.countDocuments({ category, isReady: true });
     const totalPages = Math.ceil(totalArticles / limit);
 
+    console.log(newsArticles);
     res.status(200).json({
       page,
       limit,
