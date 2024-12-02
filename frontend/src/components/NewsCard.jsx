@@ -1,4 +1,5 @@
 import { useState } from "react";
+import MediaPlayer from "./MediaPlayer";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
@@ -55,6 +56,7 @@ export default function NewsCard({ article }) {
                     {article.summary}
                 </p>
             </div>
+            <MediaPlayer />
             <div className="flex flex-row justify-between w-full">
                 <p className="text-white">{formattedDate}</p>
                 <button onClick={closeModal} className="text-white">Click to Close</button>
