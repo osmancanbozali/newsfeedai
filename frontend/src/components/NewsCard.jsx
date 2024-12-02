@@ -5,8 +5,32 @@ Modal.setAppElement("#root");
 
 export default function NewsCard({ article }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    async function sendClickEvent() {
+        try {
+            const response = await fetch('http://localhost:3000/news/click', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ADD_TOKEN_HERE`,
+                },
+                body: JSON.stringify({ newsId: article._id }),
+            });
+            if (response.ok) {
+                const result = await response.json();
+                console.log("Success:", result);
+            } else {
+                const result = await response.json();
+                console.log("Error:", result);
+            }
+        } catch (error) {
+            console.error('Error sending click event:', error);
+        }
+    }
+
     const openModal = () => {
         setModalIsOpen(true);
+        sendClickEvent();
     }
     const closeModal = () => {
         setModalIsOpen(false);
