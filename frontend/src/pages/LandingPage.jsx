@@ -1,5 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 export default function LandingPage() {
+    const navigate = useNavigate();
+
+    function goToLogin() {
+        navigate('/login');
+    }
+
     return (<div className='h-screen bg-secondarycolor overflow-y-auto flex flex-col'>
         <header>
             <Header />
@@ -11,8 +18,8 @@ export default function LandingPage() {
                 Hear yesterday's most clicked stories in your podcast.<br />
                 Enjoy a quick, personalized, distraction-free news experience.
             </p>
-            <button className='text-white font-bold mx-auto py-2 px-12 my-20 rounded-3xl bg-maincolor'>Try Now!</button>
+            <button onClick={goToLogin} className='text-white font-bold mx-auto py-2 px-12 my-20 rounded-3xl bg-maincolor'>Try Now!</button>
         </div>
-        <p className='mt-auto mb-1 text-sm md:text-base text-white text-center'>Made by <a className='underline' href="">Osmancan Bozali</a></p>
+        <p className='mt-auto mb-1 text-sm md:text-base text-white text-center'>Made by <a className='underline' href="https://github.com/osmancanbozali" target='_blank'>Osmancan Bozali</a></p>
     </div>);
 }

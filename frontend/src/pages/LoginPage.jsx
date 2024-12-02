@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function LoginPage() {
-
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -76,8 +76,8 @@ export default function LoginPage() {
                 <label className='text-white font-bold' htmlFor="">Password:</label>
                 <input className='h-10 p-1 rounded-lg border-b-2 text-maincolor border-secondarycolor focus:outline-none' type="password" name='password' value={formData.password} placeholder={errors.password ? 'Password is required!' : ''} onChange={handleChange} />
                 <button type='submit' className='text-maincolor font-bold mx-auto py-2 px-12 mt-10 mb-5 rounded-3xl bg-white active:bg-gray-200'>Login</button>
-                <a className='underline w-fit mx-auto mb-1 text-white text-center' href="">forgot my password</a>
-                <a className='underline w-fit mx-auto text-white text-center' href="">i don't have an account</a>
+                <Link className='underline w-fit mx-auto mb-1 text-white text-center' to='/'>forgot my password</Link>
+                <Link className='underline w-fit mx-auto text-white text-center' to='/register'>i don't have an account</Link>
             </form>
         </div>
     </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function RegisterPage() {
@@ -94,7 +95,7 @@ export default function RegisterPage() {
                 <label className='text-white font-bold' htmlFor="">Confirm Password:</label>
                 <input className='h-10 p-1 rounded-lg border-b-2 text-maincolor border-secondarycolor focus:outline-none' type="password" name='confirmPassword' value={formData.confirmPassword} placeholder={errors.confirmPassword ? 'Confirm Password is required!' : ''} onChange={handleChange} />
                 <button className='text-maincolor font-bold mx-auto py-2 px-12 mt-5 mb-2 rounded-3xl bg-white active:bg-gray-200' type='submit'>Login</button>
-                <a className='underline w-fit mx-auto mb-1 text-white text-center' href="">already have an account</a>
+                <Link className='underline w-fit mx-auto mb-1 text-white text-center' to='/login'>already have an account</Link>
             </form>
         </div>
     </div>
