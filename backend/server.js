@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 const newsRoutes = require('./routes/newsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -32,6 +33,8 @@ connectDB();
 // Middleware to parse JSON
 app.use(express.json());
 app.use(cors(corsOptions)); // Use the cors middleware with your options
+
+app.use('/audios', express.static(path.join(__dirname, 'audios')));
 
 app.use('/news', newsRoutes);
 app.use('/auth', authRoutes);

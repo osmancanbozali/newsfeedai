@@ -102,9 +102,6 @@ export default function NewsFeed() {
         }
     }
 
-    console.log(news);
-
-
     return (
         <div className="flex flex-col">
             <h1 className='text-white font-bold text-2xl md:text-4xl lg:text-5xl mt-10 ml-8'>Latest News:</h1>

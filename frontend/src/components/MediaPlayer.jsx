@@ -4,7 +4,7 @@ import PauseIcon from "../assets/icons/pause.svg";
 import BackIcon from "../assets/icons/back.svg";
 import ForwardIcon from "../assets/icons/forward.svg";
 
-export default function MediaPlayer() {
+export default function MediaPlayer({ audioUrl }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -37,12 +37,11 @@ export default function MediaPlayer() {
         const seconds = Math.floor(time % 60);
         return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     };
-
     return (
         <div className="flex flex-col items-center text-white p-6 w-full">
             <audio
                 ref={audioRef}
-                src="add_the_audio_file_path_here.mp3"
+                src={`http://localhost:3000/${audioUrl}`}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
             />
