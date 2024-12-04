@@ -3,6 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function LoginPage() {
+    const navList = [
+        { name: "Register", path: "/register" },
+        { name: "Login", path: "/login" },
+    ];
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -69,7 +74,7 @@ export default function LoginPage() {
 
     return (<div className='h-screen bg-secondarycolor overflow-y-auto'>
         <header>
-            <Header />
+            <Header navList={navList} />
         </header>
         <div className='flex justify-center items-center'>
             <form onSubmit={handleSumbit} className='m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-20 py-16 mt-20'>

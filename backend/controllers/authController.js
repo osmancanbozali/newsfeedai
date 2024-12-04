@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials.' });
         }
 
-        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1m' });
+        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '2h' });
         console.log(token);
         res.cookie('accessToken', token, {
             httpOnly: true,
@@ -48,4 +48,17 @@ exports.login = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+};
+
+exports.verifyToken = (req, res) => {
+    res.status(200).json({ message: 'User authenticated successfully.' });
+};
+
+exports.logout = (req, res) => {
+    res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: false, // Use true in production
+        sameSite: 'lax', // Adjust according to your needs
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
 };

@@ -1,6 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 export default function LandingPage() {
+    const navList = [
+        { name: "Register", path: "/register" },
+        { name: "Login", path: "/login" },
+    ];
+
     const navigate = useNavigate();
 
     function goToLogin() {
@@ -9,7 +14,7 @@ export default function LandingPage() {
 
     return (<div className='h-screen bg-secondarycolor overflow-y-auto flex flex-col'>
         <header>
-            <Header />
+            <Header navList={navList} />
         </header>
         <div className='flex flex-col'>
             <h1 className='text-white font-bold text-center text-2xl md:text-4xl lg:text-6xl leading-[1.5] pt-28'>Quick, Personalized, Distraction-free News<br />- Anytime, Anywhere!</h1>
