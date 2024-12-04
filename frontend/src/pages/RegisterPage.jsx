@@ -100,7 +100,7 @@ export default function RegisterPage() {
                 <input className='h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none' type="password" name='password' value={formData.password} placeholder={errors.password ? 'Password is required!' : ''} onChange={handleChange} />
                 <label className='text-white font-bold' htmlFor="">Confirm Password:</label>
                 <input className='h-10 p-1 rounded-lg border-b-2 text-maincolor border-secondarycolor focus:outline-none' type="password" name='confirmPassword' value={formData.confirmPassword} placeholder={errors.confirmPassword ? 'Confirm Password is required!' : ''} onChange={handleChange} />
-                <button className='text-maincolor font-bold mx-auto py-2 px-12 mt-5 mb-2 rounded-3xl bg-white active:bg-gray-200' type='submit'>Login</button>
+                <button className='text-maincolor font-bold mx-auto py-2 px-12 mt-5 mb-2 rounded-3xl bg-white active:bg-gray-200' type='submit'>Register</button>
                 <Link className='underline w-fit mx-auto mb-1 text-white text-center' to='/login'>already have an account</Link>
             </form>
         </div>

@@ -32,7 +32,7 @@ exports.updatePassword = async (req, res) => {
         if (!currentPassword || !newPassword || !confirmNewPassword) {
             return res.status(400).json({ message: 'Current, New and comfirm new passwords are required.' });
         }
-        
+
 
         const user = await User.findById(userId);
 
@@ -91,6 +91,24 @@ exports.resetPreferences = async (req, res) => {
     }
 };
 
+exports.getFullname = async (req, res) => {
+    try {
+        const userId = req.user._id; // Assume user ID is available from JWT middleware
+        
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ fullname: user.fullname });
+    }
+    catch (error) {
+        console.error('Error fetching full name:', error.message);
+        res.status(500).json({ error: 'Failed to fetch full name.' });
+    }
+};
+
 exports.deleteAccount = async (req, res) => {
     try {
         const userId = req.user._id; // Assume user ID is available from JWT middleware
@@ -99,7 +117,7 @@ exports.deleteAccount = async (req, res) => {
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
-          }
+        }
 
         if (!password) {
             return res.status(400).json({ message: 'Password is required.' });

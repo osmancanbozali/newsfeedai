@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { updateFullName, updatePassword, resetPreferences, deleteAccount } = require('../controllers/userController');
+const { updateFullName, updatePassword, resetPreferences, getFullname ,deleteAccount } = require('../controllers/userController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Route to update full name
@@ -11,6 +11,9 @@ router.post('/update-password', authMiddleware, updatePassword);
 
 // Route to reset preferences
 router.post('/reset-preferences', authMiddleware, resetPreferences);
+
+// Route to get full name
+router.get('/get-name', authMiddleware, getFullname);
 
 // Route to delete user
 router.delete('/delete', authMiddleware, deleteAccount);
