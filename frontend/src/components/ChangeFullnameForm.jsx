@@ -13,6 +13,7 @@ export default function ChangeFullnameForm({onClose}) {
         try {
             const response = await fetch(`http://localhost:3000/user/update-name`, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

@@ -15,7 +15,7 @@ exports.signup = async (req, res) => {
         if (password.length < 6) {
             return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
         }
-        
+
         const hashedPassword = await bcrypt.hash(password, 10) // second parameter might be changed
 
         const user = new User({ fullname, email, password: hashedPassword });
@@ -36,8 +36,15 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials.' });
         }
 
-        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1m' });
+        console.log(token);
+        res.cookie('accessToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'lax',
+            maxAge: 120 * 60 * 1000, //120 * 60 * 1000
+        });
+        res.status(200).json({ message: 'User logged in successfully.' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

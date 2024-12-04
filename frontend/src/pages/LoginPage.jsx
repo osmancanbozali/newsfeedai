@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function LoginPage() {
@@ -8,6 +8,7 @@ export default function LoginPage() {
         password: '',
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     function validate() {
         let formErrors = {};
@@ -34,6 +35,7 @@ export default function LoginPage() {
             try {
                 const response = await fetch(`http://localhost:3000/auth/login`, {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json", // Specify JSON format
                     },
@@ -43,6 +45,7 @@ export default function LoginPage() {
                 if (response.ok) {
                     const result = await response.json();
                     console.log("Success:", result);
+                    navigate('/feed');
                 } else {
                     const result = await response.json();
                     console.log("Error:", result);

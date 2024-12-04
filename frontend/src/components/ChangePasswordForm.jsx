@@ -42,6 +42,7 @@ export default function ChangePasswordForm({ onClose }) {
             try {
                 const response = await fetch(`http://localhost:3000/user/update-password`, {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },

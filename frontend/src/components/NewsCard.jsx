@@ -10,9 +10,9 @@ export default function NewsCard({ article }) {
         try {
             const response = await fetch('http://localhost:3000/news/click', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ADD_TOKEN_HERE`,
                 },
                 body: JSON.stringify({ newsId: article._id }),
             });

@@ -17,6 +17,7 @@ export default function NewsFeed() {
         try {
             const response = await fetch('http://localhost:3000/news/feed', {
                 method: "GET",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -74,6 +75,7 @@ export default function NewsFeed() {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        "credentials": "include",
                     },
                 });
                 if (!response.ok) {

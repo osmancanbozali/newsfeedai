@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         fullname: '',
@@ -58,6 +59,7 @@ export default function RegisterPage() {
                 if (response.ok) {
                     const result = await response.json();
                     console.log("Success:", result);
+                    navigate('/login');
                 } else {
                     console.log("Error: Failed to send request");
                 }

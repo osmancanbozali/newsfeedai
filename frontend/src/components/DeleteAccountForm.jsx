@@ -14,6 +14,7 @@ export default function DeleteAccountForm({ onClose}) {
         try {
             const response = await fetch(`http://localhost:3000/user/delete`, {
                 method: "DELETE",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

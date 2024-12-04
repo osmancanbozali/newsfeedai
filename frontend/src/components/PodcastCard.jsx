@@ -10,6 +10,7 @@ export default function PodcastCard() {
             try {
                 const response = await fetch("http://localhost:3000/podcast/today", {
                     method: "GET",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },

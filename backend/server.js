@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const newsRoutes = require('./routes/newsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -14,7 +15,7 @@ const podcastRoutes = require('./routes/podcastRoutes');
 // Define the CORS options
 const corsOptions = {
     credentials: true,
-    origin: '*' // Whitelist the domains you want to allow
+    origin: 'http://localhost:5173' // Whitelist the domains you want to allow
 };
 
 // Load environment variables
@@ -32,6 +33,7 @@ connectDB();
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors(corsOptions)); // Use the cors middleware with your options
 
 app.use('/audios', express.static(path.join(__dirname, 'audios')));
