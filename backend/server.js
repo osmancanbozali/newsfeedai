@@ -11,6 +11,7 @@ const podcastRoutes = require('./routes/podcastRoutes');
 
 //const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
 //const generatePodcastsCron = require('./cron/podcastCron');
+//const deletePodcastsCron = require('./cron/deletePodcastsCron');
 
 // Define the CORS options
 const corsOptions = {

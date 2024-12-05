@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const User = require('../models/User');
 const News = require('../models/News');
 const Podcast = require('../models/Podcast');
-const { getSummary, getPodcastText } = require('../services/summarizeService');
+const { getSummary, getPodcastText } = require('../services/OpenAIService');
 const { generateAudio } = require('../services/ttsService');
 
 // Function to generate personalized podcasts
@@ -23,13 +23,27 @@ const generatePodcasts = async () => {
 
         const results = await Promise.all(
             categories.map(async (category) => {
+                const now = new Date();
+                const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const startOfYesterday = new Date(startOfToday);
+                startOfYesterday.setDate(startOfYesterday.getDate() -1 ); // Midnight of the day before today
+                const endOfYesterday = new Date(startOfToday + 1); // Midnight of today
+
+                console.log(`Fetching top news for ${category} from ${startOfYesterday} to ${endOfYesterday}`);
+        
                 return await News.aggregate([
-                    { $match: { category } }, // Match news in the specific category
+                    {
+                        $match: {
+                            category, // Match news in the specific category
+                            creationDate: { $gte: startOfYesterday, $lt: endOfYesterday }, // Only "yesterday's" news
+                        },
+                    },
                     { $sort: { clickedCount: -1 } }, // Sort by clickedCount in descending order
                     { $limit: 20 }, // Limit to top 20 articles
                 ]);
             })
         );
+        
         const topNewsByCategory = categories.reduce((acc, category, index) => {
             acc[category] = results[index];
             return acc;

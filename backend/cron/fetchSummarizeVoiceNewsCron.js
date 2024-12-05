@@ -1,5 +1,5 @@
 const { fetchNewsFromAPI } = require('../services/newsService');
-const { getSummary } = require('../services/summarizeService');
+const { getSummary } = require('../services/OpenAIService');
 const { generateAudio } = require('../services/ttsService');
 const cron = require('node-cron');
 const News = require('../models/News');
@@ -65,7 +65,7 @@ const fetchSummarizeVoiceNews = async () => {
 };
 
 // Schedule to run every 2 hours
-const fetchSummarizeVoiceNewsCron = cron.schedule('*/5 * * * *', async () => {
+const fetchSummarizeVoiceNewsCron = cron.schedule('*/2 * * * *', async () => {
     console.log('Starting scheduled news processing job');
     await fetchSummarizeVoiceNews();
 });
