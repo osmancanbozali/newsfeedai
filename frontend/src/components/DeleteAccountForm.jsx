@@ -1,6 +1,7 @@
 import { useState } from "react";
-
-export default function DeleteAccountForm({ onClose}) {
+import { useNavigate } from "react-router-dom";
+export default function DeleteAccountForm() {
+    const navigate = useNavigate();
     const [password, setPassword] = useState('');
 
     function handleChange(e) {
@@ -23,7 +24,7 @@ export default function DeleteAccountForm({ onClose}) {
             if (response.ok) {
                 const result = await response.json();
                 console.log("Success:", result);
-                onClose();
+                navigate('/login');
             } else {
                 const result = await response.json();
                 console.log("Error:", result);

@@ -6,6 +6,6 @@ const authMiddleware = require('../middleware/authMiddleware');
 // Routes
 router.get('/', authMiddleware, getNews);
 router.get('/feed', authMiddleware, getPersonalizedFeed);
-router.get('/category/:category', getNewsByCategory);
+router.get('/category/:category', authMiddleware, getNewsByCategory);
 router.post('/click', authMiddleware, trackNewsClick);
 module.exports = router;

@@ -17,6 +17,9 @@ export default function RegisterPage() {
     });
     const [errors, setErrors] = useState({});
 
+    const inputStyle = 'h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none';
+    const invalidInputStyle = 'h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-red-500 focus:outline-none';
+
     function validate() {
         let formErrors = {};
 
@@ -37,7 +40,11 @@ export default function RegisterPage() {
         }
 
         if (formData.password !== formData.confirmPassword) {
-            formErrors.confirmPassword = 'Passwords do not match';
+            formErrors.notMatch = 'Passwords do not match!';
+        }
+
+        if (formData.password.length < 6 && formData.confirmPassword.length < 6) {
+            formErrors.shortPassword = 'Password must be at least 6 characters long';
         }
 
         setErrors(formErrors);
@@ -59,17 +66,22 @@ export default function RegisterPage() {
                     },
                     body: JSON.stringify(formData)
                 });
-
+                const result = await response.json();
                 if (response.ok) {
-                    const result = await response.json();
                     console.log("Success:", result);
                     navigate('/login');
                 } else {
-                    console.log("Error: Failed to send request");
+                    console.log("Error:", result);
+                    if (result.message === 'User with this email already exists.') {
+                        setErrors({ sendError: 'User with this email already exists.' });
+                    } else {
+                        setErrors({ sendError: 'Registiration failed, Please try again' });
+                    }
                 }
             } catch (error) {
                 console.error("Error:", error);
                 console.log(`Error: ${error}`);
+                setErrors({ sendError: 'Registiration failed, Please try again' });
             }
 
         } else {
@@ -93,13 +105,16 @@ export default function RegisterPage() {
             <form onSubmit={handleSumbit} className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-16 py-12 mt-20'>
                 <h1 className='text-white text-3xl lg:text-4xl font-bold text-center mb-5'>Register to NewsfeedAI</h1>
                 <label className='text-white font-bold' htmlFor="">Fullname:</label>
-                <input className='h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none' type="text" name='fullname' value={formData.fullname} placeholder={errors.fullname ? 'Username is required!' : ''} onChange={handleChange} />
+                <input className={errors.fullname ? invalidInputStyle : inputStyle} type="text" name='fullname' value={formData.fullname} placeholder={errors.fullname ? 'Username is required!' : ''} onChange={handleChange} />
                 <label className='text-white font-bold' htmlFor="">Email:</label>
-                <input className='h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none' type="email" name='email' value={formData.email} placeholder={errors.email ? 'Email is required!' : ''} onChange={handleChange} />
+                <input className={errors.email ? invalidInputStyle : inputStyle} type="email" name='email' value={formData.email} placeholder={errors.email ? 'Email is required!' : ''} onChange={handleChange} />
                 <label className='text-white font-bold' htmlFor="">Password:</label>
-                <input className='h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none' type="password" name='password' value={formData.password} placeholder={errors.password ? 'Password is required!' : ''} onChange={handleChange} />
+                <input className={errors.password || errors.notMatch ? invalidInputStyle : inputStyle} type="password" name='password' value={formData.password} placeholder={errors.password ? 'Password is required!' : ''} onChange={handleChange} />
                 <label className='text-white font-bold' htmlFor="">Confirm Password:</label>
-                <input className='h-10 p-1 rounded-lg border-b-2 text-maincolor border-secondarycolor focus:outline-none' type="password" name='confirmPassword' value={formData.confirmPassword} placeholder={errors.confirmPassword ? 'Confirm Password is required!' : ''} onChange={handleChange} />
+                <input className={errors.confirmPassword || errors.notMatch ? invalidInputStyle : inputStyle} type="password" name='confirmPassword' value={formData.confirmPassword} placeholder={errors.confirmPassword ? 'Confirm Password is required!' : ''} onChange={handleChange} />
+                {errors.sendError && <p className='text-red-500 text-center'>{errors.sendError}</p>}
+                {errors.notMatch && !errors.password && !errors.confirmPassword && <p className='text-red-500 text-center'>{errors.notMatch}</p>}
+                {errors.shortPassword && <p className='text-red-500 text-center'>{errors.shortPassword}</p>}
                 <button className='text-maincolor font-bold mx-auto py-2 px-12 mt-5 mb-2 rounded-3xl bg-white active:bg-gray-200' type='submit'>Register</button>
                 <Link className='underline w-fit mx-auto mb-1 text-white text-center' to='/login'>already have an account</Link>
             </form>

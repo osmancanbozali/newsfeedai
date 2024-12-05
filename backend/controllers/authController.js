@@ -16,6 +16,10 @@ exports.signup = async (req, res) => {
             return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
         }
 
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User with this email already exists.' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10) // second parameter might be changed
 
         const user = new User({ fullname, email, password: hashedPassword });

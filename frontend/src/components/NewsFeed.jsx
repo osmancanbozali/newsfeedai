@@ -49,6 +49,7 @@ export default function NewsFeed() {
         try {
             const response = await fetch(`http://localhost:3000/news/category/${category}`, {
                 method: "GET",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -88,6 +89,7 @@ export default function NewsFeed() {
             }
             const response = await fetch(`http://localhost:3000/news/category/${selectedCategory}?${page}`, {
                 method: "GET",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

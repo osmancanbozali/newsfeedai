@@ -130,6 +130,11 @@ exports.deleteAccount = async (req, res) => {
 
         await User.findByIdAndDelete(userId);
 
+        res.clearCookie('accessToken', {
+            httpOnly: true,
+            secure: false, // Use true in production
+            sameSite: 'lax', // Adjust according to your needs
+        });
         res.status(200).json({ message: 'Account deleted successfully.' });
     } catch (error) {
         console.error('Error deleting account:', error.message);
