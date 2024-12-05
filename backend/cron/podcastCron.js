@@ -127,7 +127,7 @@ const generatePodcasts = async () => {
     }
 };
 
-const generatePodcastsCron = cron.schedule('*/2 * * * *', async () => {
+const generatePodcastsCron = cron.schedule('30 0 * * *', async () => { // Run every day at midnight at 00:30
     console.log('Starting scheduled podcast generation job');
     await generatePodcasts();
 });

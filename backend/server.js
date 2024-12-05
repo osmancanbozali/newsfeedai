@@ -9,9 +9,10 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const podcastRoutes = require('./routes/podcastRoutes');
 
-//const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
-//const generatePodcastsCron = require('./cron/podcastCron');
-//const deletePodcastsCron = require('./cron/deletePodcastsCron');
+const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
+const generatePodcastsCron = require('./cron/podcastCron');
+const deletePodcastsCron = require('./cron/deletePodcastsCron');
+const deleteNewsCron = require('./cron/deleteNewsCron');
 
 // Define the CORS options
 const corsOptions = {

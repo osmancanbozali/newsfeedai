@@ -8,7 +8,7 @@ const News = require('../models/News');
 const fetchSummarizeVoiceNews = async () => {
     try {
         const categories = ['general', 'world', 'nation', 'business', 'technology', 'entertainment', 'sports', 'science'];
-        const amount = 10; // Number of news items to fetch per category in one API call
+        const amount = 20; // Number of news items to fetch per category in one API call
 
         for (const category of categories) {
             // Step 1: Fetch news articles from external API with a limit
@@ -65,7 +65,7 @@ const fetchSummarizeVoiceNews = async () => {
 };
 
 // Schedule to run every 2 hours
-const fetchSummarizeVoiceNewsCron = cron.schedule('*/2 * * * *', async () => {
+const fetchSummarizeVoiceNewsCron = cron.schedule('*/15 * * * *', async () => { // Run every 15 minutes
     console.log('Starting scheduled news processing job');
     await fetchSummarizeVoiceNews();
 });

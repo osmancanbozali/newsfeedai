@@ -25,7 +25,7 @@ async function deleteAllPodcasts() {
     }
 }
 
-const deletePodcastsCron = cron.schedule('*/2 * * * *', async () => { // '0 0 * * *'
+const deletePodcastsCron = cron.schedule('0 0 * * *', async () => { // Run every day at midnight
     console.log('Starting scheduled podcast deletation job');
     await deleteAllPodcasts();
 });
