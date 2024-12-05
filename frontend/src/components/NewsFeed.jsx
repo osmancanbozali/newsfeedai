@@ -72,11 +72,11 @@ export default function NewsFeed() {
         setPage(page + 1);
         try {
             if (selectedCategory === 'for you') {
-                const response = await fetch(`http://localhost:3000/news/feed?page=${page}`, {
+                const response = await fetch(`http://localhost:3000/news/feed?page=${page+1}`, {
                     method: "GET",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
-                        "credentials": "include",
                     },
                 });
                 if (!response.ok) {
@@ -87,7 +87,7 @@ export default function NewsFeed() {
                 setError(null);
                 return;
             }
-            const response = await fetch(`http://localhost:3000/news/category/${selectedCategory}?${page}`, {
+            const response = await fetch(`http://localhost:3000/news/category/${selectedCategory}?page=${page+1}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
