@@ -34,4 +34,4 @@ build
 *.sln
 *.sw?
 
-audios/
+audios/*
