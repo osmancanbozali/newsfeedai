@@ -13,7 +13,7 @@ export default function DeleteAccountForm() {
         console.log(password);
 
         try {
-            const response = await fetch(`http://localhost:3000/user/delete`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/delete`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {

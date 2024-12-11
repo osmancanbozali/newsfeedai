@@ -15,7 +15,7 @@ export default function PodcastCard() {
         const fetchPodcast = async () => {
             setLoading(true);
             try {
-                const response = await fetch("http://localhost:3000/podcast/today", {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/podcast/today`, {
                     method: "GET",
                     credentials: "include",
                     headers: {

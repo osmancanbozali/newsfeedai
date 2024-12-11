@@ -11,7 +11,7 @@ export default function ChangeFullnameForm({onClose}) {
         console.log(fullname);
 
         try {
-            const response = await fetch(`http://localhost:3000/user/update-name`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/update-name`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

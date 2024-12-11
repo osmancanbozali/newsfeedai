@@ -41,7 +41,7 @@ export default function MediaPlayer({ audioUrl }) {
         <div className="flex flex-col items-center text-white p-6 w-full">
             <audio
                 ref={audioRef}
-                src={`http://localhost:3000/${audioUrl}`}
+                src={`${import.meta.env.VITE_API_URL}/${audioUrl}`}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
             />

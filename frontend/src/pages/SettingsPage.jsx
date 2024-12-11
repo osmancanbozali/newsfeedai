@@ -29,7 +29,7 @@ export default function SettingsPage() {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:3000/auth/logout', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {

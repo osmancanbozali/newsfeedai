@@ -40,7 +40,7 @@ export default function ChangePasswordForm({ onClose }) {
 
         if (validate()) {
             try {
-                const response = await fetch(`http://localhost:3000/user/update-password`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/user/update-password`, {
                     method: "POST",
                     credentials: "include",
                     headers: {

@@ -8,7 +8,7 @@ export default function NewsCard({ article }) {
 
     async function sendClickEvent() {
         try {
-            const response = await fetch('http://localhost:3000/news/click', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/news/click`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

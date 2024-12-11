@@ -15,7 +15,7 @@ export default function NewsFeed() {
         setLoading(true);
         setSelectedCategory('for you');
         try {
-            const response = await fetch('http://localhost:3000/news/feed', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/news/feed`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -47,7 +47,7 @@ export default function NewsFeed() {
         setPage(1);
         setSelectedCategory(category);
         try {
-            const response = await fetch(`http://localhost:3000/news/category/${category}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/news/category/${category}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -72,7 +72,7 @@ export default function NewsFeed() {
         setPage(page + 1);
         try {
             if (selectedCategory === 'for you') {
-                const response = await fetch(`http://localhost:3000/news/feed?page=${page+1}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/news/feed?page=${page+1}`, {
                     method: "GET",
                     credentials: "include",
                     headers: {
@@ -87,7 +87,7 @@ export default function NewsFeed() {
                 setError(null);
                 return;
             }
-            const response = await fetch(`http://localhost:3000/news/category/${selectedCategory}?page=${page+1}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/news/category/${selectedCategory}?page=${page+1}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {

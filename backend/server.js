@@ -17,7 +17,7 @@ const deleteNewsCron = require('./cron/deleteNewsCron');
 // Define the CORS options
 const corsOptions = {
     credentials: true,
-    origin: 'http://localhost:5173' // Whitelist the domains you want to allow
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173' // Whitelist the domains you want to allow
 };
 
 // Load environment variables

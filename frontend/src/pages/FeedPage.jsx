@@ -14,7 +14,7 @@ export default function FeedPage() {
     useEffect(() => {
         async function fetchFullname() {
             try {
-                const response = await fetch(`http://localhost:3000/user/get-name`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-name`, {
                     method: "GET",
                     credentials: 'include',
                 });

@@ -3,7 +3,7 @@ export default function ResetPreferencesForm({onClose}) {
 
     async function handleResetPreferences() {
         try {
-            const response = await fetch(`http://localhost:3000/user/reset-preferences`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/user/reset-preferences`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
