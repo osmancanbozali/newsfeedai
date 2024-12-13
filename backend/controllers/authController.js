@@ -42,10 +42,13 @@ exports.login = async (req, res) => {
 
         const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '2h' });
         console.log(token);
+        const frontendURL = new URL(process.env.FRONTEND_URL || 'http://localhost').hostname;
+        const formattedURL = frontendURL.startsWith('.') ? frontendURL : `.${frontendURL}`;
         res.cookie('accessToken', token, {
+            domain: formattedURL,
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
+            secure: true,
+            sameSite: 'strict',
             maxAge: 120 * 60 * 1000, //120 * 60 * 1000
         });
         res.status(200).json({ message: 'User logged in successfully.' });
@@ -59,10 +62,13 @@ exports.verifyToken = (req, res) => {
 };
 
 exports.logout = (req, res) => {
+    const frontendURL = new URL(process.env.FRONTEND_URL || 'http://localhost').hostname;
+    const formattedURL = frontendURL.startsWith('.') ? frontendURL : `.${frontendURL}`;
     res.clearCookie('accessToken', {
         httpOnly: true,
-        secure: false, // Use true in production
-        sameSite: 'lax', // Adjust according to your needs
+        secure: true,
+        sameSite: 'strict',
+        domain: process.env.FRONTEND_URL ? new URL(process.env.FRONTEND_URL).hostname : undefined,
     });
     res.status(200).json({ message: 'Logged out successfully' });
 };
