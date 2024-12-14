@@ -5,7 +5,7 @@ Modal.setAppElement("#root");
 
 export default function NewsCard({ article }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    console.log(article.audioUrl);
     async function sendClickEvent() {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/news/click`, {

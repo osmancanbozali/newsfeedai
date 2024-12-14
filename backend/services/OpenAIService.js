@@ -1,6 +1,5 @@
 const { OpenAI } = require('openai');
 const dotenv = require('dotenv');
-const { get } = require('mongoose');
 
 dotenv.config();
 
