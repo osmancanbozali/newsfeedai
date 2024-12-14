@@ -81,7 +81,7 @@ export default function LoginPage() {
             <Header navList={navList} />
         </header>
         <div className='flex justify-center items-center'>
-            <form onSubmit={handleSumbit} className='m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-20 py-16 mt-20'>
+            <form onSubmit={handleSumbit} className='m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-10 md:px-20 py-16 mt-20'>
                 <h1 className='text-white text-3xl lg:text-4xl font-bold text-center mb-16'>Login to NewsfeedAI</h1>
                 <label className='text-white font-bold' htmlFor="">Email:</label>
                 <input className={errors.email ? invalidInputStyle : inputStyle} type="email" name='email' value={formData.email} placeholder={errors.email ? 'Email is required!' : ''} onChange={handleChange} />
