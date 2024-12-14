@@ -16,8 +16,8 @@ export default function SettingsPage() {
 
     const [activeForm, setActiveForm] = useState(null);
 
-    const activeButton = "text-white font-bold text-xs md:text-sm lg:text-base mx-2 lg:mx-4 py-2 px-5 lg:px-10 rounded-3xl bg-gray-600";
-    const inactiveButton = "text-white font-bold text-xs md:text-sm lg:text-base mx-2 lg:mx-4 py-2 px-5 lg:px-10 rounded-3xl bg-maincolor";
+    const activeButton = "text-white font-bold text-xs md:text-sm lg:text-base mx-2 lg:mx-4 py-2 px-5 lg:px-10 my-1 sm:my-0  rounded-3xl bg-gray-600";
+    const inactiveButton = "text-white font-bold text-xs md:text-sm lg:text-base mx-2 lg:mx-4 py-2 px-5 lg:px-10 my-1 sm:my-0  rounded-3xl bg-maincolor";
 
     const handleActiveForm = (form) => {
         setActiveForm(form);
@@ -53,7 +53,7 @@ export default function SettingsPage() {
             </header>
             <h1 className="text-white font-bold text-3xl md:text-4xl lg:text-5xl m-12">Settings:</h1>
             <div className="flex flex-col items-center">
-                <div className="flex flex-row">
+                <div className="flex flex-col sm:flex-row ">
                     <button onClick={() => handleActiveForm('changeFullname')} className={activeForm === 'changeFullname' ? activeButton : inactiveButton} >Change Fullname</button>
                     <button onClick={() => handleActiveForm('changePassword')} className={activeForm === 'changePassword' ? activeButton : inactiveButton} >Change Password</button>
                     <button onClick={() => handleActiveForm('resetPreferences')} className={activeForm === 'resetPreferences' ? activeButton : inactiveButton} >Reset Preferences</button>

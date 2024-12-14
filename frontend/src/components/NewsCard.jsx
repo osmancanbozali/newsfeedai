@@ -57,7 +57,7 @@ export default function NewsCard({ article }) {
                     {smallerSummary}
                 </p>
             </div>
-            <div className="flex flex-row justify-between w-full">
+            <div className="flex flex-row justify-between w-full mt-1">
                 <p className="text-white">{formattedDate}</p>
                 <p className="text-white">Click to Expand</p>
                 <p className="text-white">{article.source}</p>

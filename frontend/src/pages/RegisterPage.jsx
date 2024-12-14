@@ -102,7 +102,7 @@ export default function RegisterPage() {
             <Header navList={navList} />
         </header>
         <div className='flex justify-center items-center'>
-            <form onSubmit={handleSumbit} className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-16 py-12 mt-20'>
+            <form onSubmit={handleSumbit} className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-10 md:px-16 py-12 mt-20'>
                 <h1 className='text-white text-3xl lg:text-4xl font-bold text-center mb-5'>Register to NewsfeedAI</h1>
                 <label className='text-white font-bold' htmlFor="">Fullname:</label>
                 <input className={errors.fullname ? invalidInputStyle : inputStyle} type="text" name='fullname' value={formData.fullname} placeholder={errors.fullname ? 'Username is required!' : ''} onChange={handleChange} />
