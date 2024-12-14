@@ -40,7 +40,7 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials.' });
         }
 
-        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '2h' });
+        const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '8h' });
         console.log(token);
         const frontendURL = new URL(process.env.FRONTEND_URL || 'http://localhost').hostname;
         const formattedURL = frontendURL.startsWith('.') ? frontendURL : `.${frontendURL}`;
@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'strict',
-            maxAge: 120 * 60 * 1000, //120 * 60 * 1000
+            maxAge: 8 * 60 * 60 * 1000, // 8 hours
         });
         res.status(200).json({ message: 'User logged in successfully.' });
     } catch (error) {
