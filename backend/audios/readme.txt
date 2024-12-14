@@ -1,1 +1,0 @@
-this is the folder which audio files will be stored
