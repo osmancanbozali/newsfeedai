@@ -1,18 +1,33 @@
-const fs = require('fs');
-const util = require('util');
 const axios = require('axios');
 const dotenv = require('dotenv');
-
+const { Storage } = require('@google-cloud/storage');
 dotenv.config();
 
-// Save the audio content to a file
-const saveAudioFile = async (audioContent, filename) => {
-    const writeFile = util.promisify(fs.writeFile);
-    const filepath = `./audios/${filename}.mp3`;
-    const binaryData = Buffer.from(audioContent, 'base64');
-    await writeFile(filepath, binaryData, 'binary');
-    console.log(`Audio saved to: ${filepath}`);
-    return filepath;
+const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+
+const storage = new Storage({
+    credentials: credentials,
+});
+
+const bucketName = process.env.GCS_BUCKET_NAME;
+
+const saveAudioFileToGCS = async (audioContent, filename) => {
+    try {
+        const bucket = storage.bucket(bucketName);
+        const file = bucket.file(`${filename}.mp3`);
+        const binaryData = Buffer.from(audioContent, 'base64');
+
+        // Upload the file to the bucket
+        await file.save(binaryData, {
+            contentType: 'audio/mpeg',
+        });
+
+        console.log(`Audio uploaded to: gs://${bucketName}/${filename}.mp3`);
+        return `https://storage.googleapis.com/${bucketName}/${filename}.mp3`;
+    } catch (error) {
+        console.error('Error uploading file to Google Cloud Storage:', error.message);
+        throw new Error('Failed to upload file to Google Cloud Storage');
+    }
 };
 
 const generateAudio = async (text, filename) => {
@@ -30,7 +45,7 @@ const generateAudio = async (text, filename) => {
             throw new Error('No audio content returned from Google TTS API');
         }
 
-        const filepath = await saveAudioFile(audioContent, filename);
+        const filepath = await saveAudioFileToGCS(audioContent, filename);
         return filepath;
     } catch (error) {
         console.error('Error generating audio:', error.response?.data || error.message);
