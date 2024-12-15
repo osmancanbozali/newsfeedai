@@ -1,12 +1,19 @@
+const { Storage } = require('@google-cloud/storage');
 const News = require('../models/News');
-const fs = require('fs').promises;
 const cron = require('node-cron');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+const storage = new Storage({credentials: credentials});
+const bucketName = process.env.GCS_BUCKET_NAME;
+console.log('Bucket name:', bucketName);
 
 async function deleteOldNews() {
     try {
         // Calculate the cutoff date (3 days ago)
         const cutoffDate = new Date();
-        cutoffDate.setDate(cutoffDate.getDate() - 3);
+        cutoffDate.setDate(cutoffDate.getDate());
 
         console.log("Cutoff date:", cutoffDate);
 
@@ -15,15 +22,21 @@ async function deleteOldNews() {
             publishedAt: { $lt: cutoffDate },
         }).exec();
 
-        // Delete associated audio files
+        // Delete associated audio files from GCS bucket
         for (const news of oldNews) {
             try {
                 if (news.audioUrl) {
-                    await fs.unlink(news.audioUrl); // Delete the audio file
-                    console.log(`Deleted audio file: ${news.audioUrl}`);
+                    console.log(`Deleting audio file from GCS: ${news.audioUrl}`);
+                    // Extract the GCS file name from the audio URL
+                    const fileName = news.audioUrl.split(`${bucketName}/`)[1];
+                    if (fileName) {
+                        const file = storage.bucket(bucketName).file(fileName);
+                        await file.delete(); // Delete the file from the bucket
+                        console.log(`Deleted audio file from GCS: ${fileName}`);
+                    }
                 }
             } catch (fileError) {
-                console.error(`Error deleting file ${news.audioUrl}:`, fileError);
+                console.error(`Error deleting file from GCS (${news.audioUrl}):`, fileError);
             }
         }
 

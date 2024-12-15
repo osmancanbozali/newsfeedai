@@ -1,7 +1,14 @@
+const { Storage } = require('@google-cloud/storage');
 const Podcast = require('../models/Podcast');
-const fs = require('fs').promises; // Use the promise-based API for file system operations
 const cron = require('node-cron');
+const dotenv = require('dotenv');
+dotenv.config();
 
+const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+const storage = new Storage({credentials: credentials});
+const bucketName = process.env.GCS_BUCKET_NAME;
+
+// Function to delete all podcasts
 async function deleteAllPodcasts() {
     try {
         const allPodcasts = await Podcast.find({}).exec();
@@ -9,8 +16,13 @@ async function deleteAllPodcasts() {
         for (const podcast of allPodcasts) {
             try {
                 if (podcast.podcastUrl) {
-                    await fs.unlink(podcast.podcastUrl); // Delete the file
-                    console.log(`Deleted file: ${podcast.podcastUrl}`);
+                    // Extract the GCS file name from the audio URL
+                    const fileName = podcast.podcastUrl.split(`${bucketName}/`)[1];
+                    if (fileName) {
+                        const file = storage.bucket(bucketName).file(fileName);
+                        await file.delete(); // Delete the file from the bucket
+                        console.log(`Deleted audio file from GCS: ${fileName}`);
+                    }
                 }
             } catch (fileError) {
                 console.error(`Error deleting file ${podcast.podcastUrl}:`, fileError);
@@ -18,7 +30,6 @@ async function deleteAllPodcasts() {
         }
 
         const result = await Podcast.deleteMany({});
-
         console.log(`${result.deletedCount} podcasts deleted.`);
     } catch (error) {
         console.error('Error deleting all podcasts:', error);
