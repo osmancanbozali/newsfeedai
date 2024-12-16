@@ -94,7 +94,7 @@ exports.resetPreferences = async (req, res) => {
 exports.getFullname = async (req, res) => {
     try {
         const userId = req.user._id; // Assume user ID is available from JWT middleware
-        
+
         const user = await User.findById(userId);
 
         if (!user) {
@@ -132,8 +132,9 @@ exports.deleteAccount = async (req, res) => {
 
         res.clearCookie('accessToken', {
             httpOnly: true,
-            secure: false, // Use true in production
-            sameSite: 'lax', // Adjust according to your needs
+            secure: true,
+            sameSite: 'strict',
+            domain: process.env.FRONTEND_URL ? new URL(process.env.FRONTEND_URL).hostname : undefined,
         });
         res.status(200).json({ message: 'Account deleted successfully.' });
     } catch (error) {
