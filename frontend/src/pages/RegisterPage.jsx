@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
 export default function RegisterPage() {
@@ -7,8 +7,6 @@ export default function RegisterPage() {
         { name: "Register", path: "/register" },
         { name: "Login", path: "/login" },
     ];
-    const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         fullname: '',
         email: '',
@@ -16,6 +14,7 @@ export default function RegisterPage() {
         confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
+    const [success, setSuccess] = useState(false);
 
     const inputStyle = 'h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-secondarycolor focus:outline-none';
     const invalidInputStyle = 'h-10 p-1 rounded-lg border-b-2 mb-4 text-maincolor border-red-500 focus:outline-none';
@@ -62,14 +61,14 @@ export default function RegisterPage() {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json", // Specify JSON format
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify(formData)
                 });
                 const result = await response.json();
                 if (response.ok) {
                     console.log("Success:", result);
-                    navigate('/login');
+                    setSuccess(true);
                 } else {
                     console.log("Error:", result);
                     if (result.message === 'User with this email already exists.') {
@@ -102,7 +101,7 @@ export default function RegisterPage() {
             <Header navList={navList} />
         </header>
         <div className='flex justify-center items-center'>
-            <form onSubmit={handleSumbit} className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-10 md:px-16 py-12 mt-20'>
+            {!success ? <form onSubmit={handleSumbit} className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-10 md:px-16 py-12 mt-20'>
                 <h1 className='text-white text-3xl lg:text-4xl font-bold text-center mb-5'>Register to NewsfeedAI</h1>
                 <label className='text-white font-bold' htmlFor="">Fullname:</label>
                 <input className={errors.fullname ? invalidInputStyle : inputStyle} type="text" name='fullname' value={formData.fullname} placeholder={errors.fullname ? 'Username is required!' : ''} onChange={handleChange} />
@@ -118,6 +117,10 @@ export default function RegisterPage() {
                 <button className='text-maincolor font-bold mx-auto py-2 px-12 mt-5 mb-2 rounded-3xl bg-white active:bg-gray-200' type='submit'>Register</button>
                 <Link className='underline w-fit mx-auto mb-1 text-white text-center' to='/login'>already have an account</Link>
             </form>
+                : <div className=' m-auto w-4/5 md:w-3/5 lg:w-2/5 aspect-square bg-maincolor rounded-lg flex flex-col gap-2 px-10 md:px-16 py-12 mt-20'>
+                    <h1 className='text-white text-3xl lg:text-4xl font-bold text-center mb-5'>Registration Successful 🎉</h1>
+                    <p className='text-white text-center'>Thank you for signing up. We’ve sent a verification email to the address you provided. Please check your inbox (and spam or promotions folder, if necessary) and click on the verification link to activate your account.</p>
+                </div>}
         </div>
     </div>
     );

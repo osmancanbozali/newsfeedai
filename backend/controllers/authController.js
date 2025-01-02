@@ -1,11 +1,11 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const transporter = require('../services/mailService');
 
 exports.signup = async (req, res) => {
     try {
         const { fullname, email, password, confirmPassword } = req.body;
-        console.log(req.body);
         if (!fullname || !email || !password || !confirmPassword) {
             return res.status(400).json({ message: 'All fields are required.' });
         }
@@ -22,8 +22,18 @@ exports.signup = async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10) // second parameter might be changed
 
-        const user = new User({ fullname, email, password: hashedPassword });
+        const user = new User({ fullname, email, password: hashedPassword, isVerified: false });
         await user.save();
+
+        const token = jwt.sign({ email }, process.env.JWT_EMAIL_SECRET, { expiresIn: "1d" });
+        const url = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/verify-email?token=${token}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Verify your email',
+            html: `<h1>Click <a href="${url}">here</a> to verify your email.</h1>`,
+        });
 
         res.status(201).json({ message: 'User registered successfully.' });
     } catch (error) {
@@ -31,13 +41,39 @@ exports.signup = async (req, res) => {
     }
 };
 
+exports.verifyEmail = async (req, res) => {
+    try {
+        const { token } = req.query;
+
+        if (!token) {
+            return res.status(400).json({ message: 'Invalid token.' });
+        }
+
+        const { email } = jwt.verify(token, process.env.JWT_EMAIL_SECRET);
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found.' });
+        }
+
+        user.isVerified = true;
+        await user.save();
+        res.status(200).json({ message: 'Email verified successfully.' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(400).json({ message: 'Invalid credentials.' });
+            return res.status(400).json({ message: 'Invalid email or password. Please try again.' });
+        }
+
+        if (!user.isVerified) {
+            return res.status(403).json({ message: "Email not verified. Please check your inbox." });
         }
 
         const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '2h' });

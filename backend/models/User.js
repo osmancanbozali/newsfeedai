@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     lastActivity: { type: Date, default: Date.now },
+    isVerified: { type: Boolean, default: false },
     interactedNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
     interactedCategories: {
         type: Map,

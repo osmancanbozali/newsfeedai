@@ -21,6 +21,7 @@
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.2",
     "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.16",
     "openai": "^4.68.1"
   }
 }
