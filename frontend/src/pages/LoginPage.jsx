@@ -45,7 +45,7 @@ export default function LoginPage() {
                     method: "POST",
                     credentials: "include",
                     headers: {
-                        "Content-Type": "application/json", // Specify JSON format
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify(formData)
                 });
@@ -87,7 +87,7 @@ export default function LoginPage() {
                 <input className={errors.email ? invalidInputStyle : inputStyle} type="email" name='email' value={formData.email} placeholder={errors.email ? 'Email is required!' : ''} onChange={handleChange} />
                 <label className='text-white font-bold' htmlFor="">Password:</label>
                 <input className={errors.password ? invalidInputStyle : inputStyle} type="password" name='password' value={formData.password} placeholder={errors.password ? 'Password is required!' : ''} onChange={handleChange} />
-                {errors.invalid && <p className='text-red-500 text-center'>Invalid email or password. Please try again.</p>}
+                {errors.invalid && <p className='text-red-500 text-center'>{errors.invalid}</p>}
                 <button type='submit' className='text-maincolor font-bold mx-auto py-2 px-12 mt-10 mb-5 rounded-3xl bg-white active:bg-gray-200'>Login</button>
                 <Link className='underline w-fit mx-auto mb-1 text-white text-center' to='/'>forgot my password</Link>
                 <Link className='underline w-fit mx-auto text-white text-center' to='/register'>i don't have an account</Link>
