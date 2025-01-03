@@ -102,3 +102,64 @@ exports.logout = (req, res) => {
     });
     res.status(200).json({ message: 'Logged out successfully' });
 };
+
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ message: 'User with this email can not found.' });
+        }
+
+        const token = jwt.sign({ email }, process.env.JWT_EMAIL_SECRET, { expiresIn: '1h' });
+        const url = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${token}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Reset your password',
+            html: `<h1>Click <a href="${url}">here</a> to reset your password.</h1>`,
+        });
+
+        res.status(200).json({ message: 'Password reset link sent to your email.' });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.resetPassword = async (req, res) => {
+    try {
+        const { token } = req.query;
+        const { password, confirmPassword } = req.body;
+
+        if (!token) {
+            return res.status(400).json({ message: 'Invalid token.' });
+        }
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: 'Passwords do not match.' });
+        }
+
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+        }
+
+        const { email } = jwt.verify(token, process.env.JWT_EMAIL_SECRET);
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ message: 'User not found.' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({ message: 'Password reset successfully.' });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
