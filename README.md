@@ -22,7 +22,9 @@
 📂 **Category-Based Browsing**: Explore news across categories like Technology, Business, Sports, and more.  
 🔒 **User Authentication**: Secure registration and login system using JWT.  
 ☁️ **Cloud-Based Storage**: Efficiently stores audio files in Google Cloud Storage for scalability.  
-📱 **Responsive Design**: Fully responsive frontend, ensuring seamless use across devices.
+📱 **Responsive Design**: Fully responsive frontend, ensuring seamless use across devices.\
+✉️ **Email Verification**: Validates user email addresses during registration, adding an extra layer of account security.\
+↩️ **Reset Password**: Allows users to initiate a secure password reset process via email if they forget their credentials.
 
 ---
 
@@ -89,8 +91,6 @@
 
 ## **To Do**
 
-- 📧 **Email Verification**: Add functionality to verify user emails during registration to enhance account security.  
-- 🔒 **Reset Password Feature**: Implement a secure process for users to reset their passwords in case of loss.  
 - 🛠️ **Enhancing Prompt Engineering**: Refine the summarization prompts for OpenAI GPT to improve summary accuracy and coherence.  
 
 ---
