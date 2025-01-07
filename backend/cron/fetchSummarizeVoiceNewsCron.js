@@ -65,7 +65,7 @@ const fetchSummarizeVoiceNews = async () => {
 };
 
 // Schedule to run every 2 hours
-const fetchSummarizeVoiceNewsCron = cron.schedule('10 * * * *', async () => { // Run every hour at 10 minutes past
+const fetchSummarizeVoiceNewsCron = cron.schedule('10 */6 * * *', async () => { // Run every hour at 10 minutes past
     console.log('Starting scheduled news processing job');
     await fetchSummarizeVoiceNews();
 });

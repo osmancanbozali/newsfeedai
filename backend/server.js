@@ -10,10 +10,10 @@ const userRoutes = require('./routes/userRoutes');
 const podcastRoutes = require('./routes/podcastRoutes');
 
 // Disable the following cron jobs for now
-//const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
-//const generatePodcastsCron = require('./cron/podcastCron');
-//const deletePodcastsCron = require('./cron/deletePodcastsCron');
-//const deleteNewsCron = require('./cron/deleteNewsCron');
+const fetchSummarizeVoiceNewsCron = require('./cron/fetchSummarizeVoiceNewsCron');
+const generatePodcastsCron = require('./cron/podcastCron');
+const deletePodcastsCron = require('./cron/deletePodcastsCron');
+const deleteNewsCron = require('./cron/deleteNewsCron');
 
 // Define the CORS options
 const corsOptions = {
